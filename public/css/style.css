@@ -1,0 +1,116 @@
+/* Global custom styles on top of Bootstrap 5 — Day 5 polish pass */
+
+:root {
+    --brand-primary: #2f5d8a;
+    --brand-primary-dark: #244a6f;
+    --surface-bg: #f5f6f8;
+}
+
+body {
+    background-color: #f5f6f8;
+    color: #2d2d2d;
+}
+
+/* ---------- Navbar ---------- */
+.navbar-brand {
+    letter-spacing: 0.3px;
+}
+
+.navbar .badge {
+    font-size: 0.65rem;
+    vertical-align: middle;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    border: none;
+    border-radius: 14px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card.shadow-sm:hover {
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Tutor browse cards */
+.card.h-100 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.btn-primary:hover {
+    background-color: #244a6f;
+    border-color: #244a6f;
+}
+
+/* ---------- Forms ---------- */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 0.2rem rgba(47, 93, 138, 0.15);
+}
+
+/* ---------- Badges ---------- */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.7em;
+}
+
+/* ---------- Tables ---------- */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #6c757d;
+    border-bottom-width: 1px;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
+    .table-responsive table {
+        font-size: 0.85rem;
+    }
+
+    /* Stack filter form controls full-width on small screens */
+    form.row.g-2 .col-auto {
+        width: 100%;
+    }
+
+    form.row.g-2 .col-auto .form-control,
+    form.row.g-2 .col-auto .form-select {
+        width: 100%;
+    }
+}
+
+/* ---------- Empty state text ---------- */
+.text-muted {
+    font-size: 0.95rem;
+}

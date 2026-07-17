@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Dashboard — Tutor Booking System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+    <div class="container">
+        <% if (flashSuccess) { %>
+            <div class="alert alert-success"><%= flashSuccess %></div>
+        <% } %>
+
+        <div class="card shadow-sm p-4 mb-4">
+            <h2>Welcome, <%= user.name %></h2>
+            <p class="text-muted mb-0">
+                Teaching <strong><%= profile.subject %></strong> &middot;
+                RM<%= profile.hourly_rate %>/hr &middot;
+                <a href="/tutor/profile">edit profile</a>
+            </p>
+        </div>
+
+        <div class="card shadow-sm p-4 mb-4">
+            <h4 class="mb-3">Pending booking requests (<%= pendingBookings.length %>)</h4>
+
+            <% if (pendingBookings.length === 0) { %>
+                <p class="text-muted mb-0">No pending requests right now.</p>
+            <% } else { %>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% pendingBookings.forEach(function(b) { %>
+                                <tr>
+                                    <td><%= b.student_name %></td>
+                                    <td><%= b.subject %></td>
+                                    <td><%= b.booking_date.toISOString ? b.booking_date.toISOString().split('T')[0] : b.booking_date %></td>
+                                    <td><%= b.booking_time %></td>
+                                    <td>
+                                        <form method="POST" action="/tutor/bookings/<%= b.id %>/approve" class="d-inline">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button class="btn btn-sm btn-success">Approve</button>
+                                        </form>
+                                        <form method="POST" action="/tutor/bookings/<%= b.id %>/reject" class="d-inline">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button class="btn btn-sm btn-outline-danger">Reject</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="card shadow-sm p-4">
+            <h4 class="mb-3">Today's approved sessions (<%= todaysBookings.length %>)</h4>
+
+            <% if (todaysBookings.length === 0) { %>
+                <p class="text-muted mb-0">No approved sessions today.</p>
+            <% } else { %>
+                <ul class="list-group list-group-flush">
+                    <% todaysBookings.forEach(function(b) { %>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span><%= b.booking_time %> — <%= b.subject %> with <%= b.student_name %></span>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+
+            <a href="/tutor/schedule" class="btn btn-outline-secondary mt-3">View full schedule</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
